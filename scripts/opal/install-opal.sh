@@ -1,10 +1,10 @@
 #!/bin/bash
 
-VAGRANT_DATA=/vagrant_data
+VAGRANT_DATA='/root/vagrant-obiba/data'
 
 source $VAGRANT_DATA/settings
 
-if [ $(grep -c '^deb http://cran.rstudio.com/bin/linux/ubuntu precise/' /etc/apt/sources.list) -eq 0 ];
+if [ $(grep -c '^deb http://www.stats.bris.ac.uk/R/bin/linux/ubuntu precise/' /etc/apt/sources.list) -eq 0 ];
 then
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 	sudo sh -c 'echo "deb http://cran.rstudio.com/bin/linux/ubuntu precise/" >> /etc/apt/sources.list'
@@ -54,21 +54,21 @@ sudo apt-get install -y opal-rserver
 sudo service rserver restart
 
 # Opal Datashield
-sudo Rscript $VAGRANT_DATA/r/install-opal-r-client.R
+#sudo Rscript $VAGRANT_DATA/r/install-opal-r-client.R
 sudo Rscript $VAGRANT_DATA/r/install-opal-r-server.R
 
 # R studio
-sudo apt-get -y install libapparmor1
-sudo apt-get -y install gdebi-core
-wget -q http://download2.rstudio.org/$RSTUDIO
-sudo gdebi -n $RSTUDIO
-rm $RSTUDIO
-sudo cp /usr/lib/rstudio-server/extras/init.d/debian/rstudio-server /etc/init.d
-sudo update-rc.d rstudio-server defaults
+#sudo apt-get -y install libapparmor1
+#sudo apt-get -y install gdebi-core
+#wget -q http://download2.rstudio.org/$RSTUDIO
+#sudo gdebi -n $RSTUDIO
+#rm $RSTUDIO
+#sudo cp /usr/lib/rstudio-server/extras/init.d/debian/rstudio-server /etc/init.d
+#sudo update-rc.d rstudio-server defaults
 
 # Add default datashield user
-sudo adduser --disabled-password --gecos "" datashield
-echo "datashield:datashield4ever" | sudo chpasswd
+#sudo adduser --disabled-password --gecos "" datashield
+#echo "datashield:datashield4ever" | sudo chpasswd
 
 # Add databases in Opal at the end of the VM setup so we are sure that Opal is running
 echo "Create Opal databases"
