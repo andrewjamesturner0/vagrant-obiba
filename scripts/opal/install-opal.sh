@@ -55,7 +55,7 @@ sudo service rserver restart
 
 # Opal Datashield
 #sudo Rscript $VAGRANT_DATA/r/install-opal-r-client.R
-sudo Rscript $VAGRANT_DATA/r/install-opal-r-server.R
+#sudo Rscript $VAGRANT_DATA/r/install-opal-r-server.R
 
 # R studio
 #sudo apt-get -y install libapparmor1
