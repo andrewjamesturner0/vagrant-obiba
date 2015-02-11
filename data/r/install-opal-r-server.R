@@ -1,4 +1,11 @@
 #! /usr/bin/Rscript --vanilla
 
-install.packages('datashield', repos='http://cran.obiba.org', type='source')
-install.packages('devtools', repos='http://cran.uk.r-project.org')
+# Install datashield server R packages via opal
+library(opaladmin)
+o<-opal.login('administrator', 'password', url='https://localhost:8443')
+dsadmin.install_package(o, 'datashield')
+dsadmin.set_package_methods(o, pkg='dsBase')
+dsadmin.set_package_methods(o, pkg='dsStats')
+dsadmin.set_package_methods(o, pkg='dsGraphics')
+dsadmin.set_package_methods(o, pkg='dsModelling')
+opal.logout(o)
