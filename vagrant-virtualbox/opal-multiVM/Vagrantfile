@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "dstesting100" do |dstesting100|
+    dstesting100.vm.box = "precise32"
+    dstesting100.vm.box_url = "http://files.vagrantup.com/precise32.box"
+    dstesting100.vm.provision :shell, :path => "../../scripts/opal/add-obiba-stable-apt-repo.sh"
+    dstesting100.vm.provision :shell, :path => "../../scripts/opal/install-opal.sh"
+    dstesting100.vm.network "private_network", ip: "192.168.56.100"
+    dstesting100.vm.synced_folder "../../data", "/vagrant_data"
+
+    dstesting100.vm.provider :virtualbox do |vb|
+      # Use VBoxManage to customize the VM. For example to change memory:
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+
+  config.vm.define "dstesting101" do |dstesting101|
+    dstesting101.vm.box = "precise32"
+    dstesting101.vm.box_url = "http://files.vagrantup.com/precise32.box"
+    dstesting101.vm.provision :shell, :path => "../../scripts/opal/add-obiba-stable-apt-repo.sh"
+    dstesting101.vm.provision :shell, :path => "../../scripts/opal/install-opal.sh"
+    dstesting101.vm.network "private_network", ip: "192.168.56.101"
+    dstesting101.vm.synced_folder "../../data", "/vagrant_data"
+
+    dstesting101.vm.provider :virtualbox do |vb|
+      # Use VBoxManage to customize the VM. For example to change memory:
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+
+  config.vm.define "dstesting200" do |dstesting200|
+    dstesting200.vm.box = "precise32"
+    dstesting200.vm.box_url = "http://files.vagrantup.com/precise32.box"
+    dstesting200.vm.provision :shell, :path => "../../scripts/opal/add-obiba-stable-apt-repo.sh"
+    dstesting200.vm.provision :shell, :path => "../../scripts/opal/install-opal.sh"
+    dstesting200.vm.network "private_network", ip: "192.168.56.200"
+    dstesting200.vm.synced_folder "../../data", "/vagrant_data"
+
+    dstesting200.vm.provider :virtualbox do |vb|
+      # Use VBoxManage to customize the VM. For example to change memory:
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+end
