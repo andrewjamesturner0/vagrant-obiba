@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
     dstesting100.vm.network "private_network", ip: "192.168.56.100"
     dstesting100.vm.synced_folder "../../data", "/vagrant_data"
     dstesting100.vm.provision :shell, :path => "../../scripts/opal/copy-testdata-to-opal-fs.sh"
+    dstesting100.vm.provision :shell, :path => "../../scripts/opal/create-opal-projects.sh"
 
     dstesting100.vm.provider :virtualbox do |vb|
       # Use VBoxManage to customize the VM. For example to change memory:
@@ -25,6 +26,7 @@ Vagrant.configure("2") do |config|
     dstesting101.vm.network "private_network", ip: "192.168.56.101"
     dstesting101.vm.synced_folder "../../data", "/vagrant_data"
     dstesting101.vm.provision :shell, :path => "../../scripts/opal/copy-testdata-to-opal-fs.sh"
+    dstesting101.vm.provision :shell, :path => "../../scripts/opal/create-opal-projects.sh"
 
     dstesting101.vm.provider :virtualbox do |vb|
       # Use VBoxManage to customize the VM. For example to change memory:
