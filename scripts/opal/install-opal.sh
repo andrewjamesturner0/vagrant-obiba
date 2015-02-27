@@ -1,8 +1,8 @@
 #!/bin/bash
 
-VAGRANT_DATA='/root/vagrant-obiba/data'
+VAGRANT_DATA='/root/vagrant-obiba'
 
-source $VAGRANT_DATA/settings
+source $VAGRANT_DATA/data/settings
 
 if [ $(grep -c '^deb http://www.stats.bris.ac.uk/R/bin/linux/ubuntu precise/' /etc/apt/sources.list) -eq 0 ];
 then
@@ -28,7 +28,7 @@ then
   echo mysql-server mysql-server/root_password_again select $MYSQL_ROOT_PWD | debconf-set-selections
 	sudo apt-get -y install mysql-server
 fi
-sudo cp $VAGRANT_DATA/mysql/my.cnf /etc/mysql
+sudo cp $VAGRANT_DATA/data/mysql/my.cnf /etc/mysql
 sudo service mysql restart
 
 # Java7 install
@@ -54,8 +54,14 @@ sudo apt-get install -y opal-rserver
 sudo service rserver restart
 
 # Opal Datashield
-sudo Rscript $VAGRANT_DATA/r/install-opal-r-client.R
-sudo Rscript $VAGRANT_DATA/r/install-opal-r-server.R
+sudo Rscript $VAGRANT_DATA/data/r/install-opal-r-client.R
+sudo Rscript $VAGRANT_DATA/data/r/install-opal-r-server.R
+
+# Datashield test data
+sudo ./$VAGRANT_DATA/scripts/opal/copy-testdata-to-opal-fs.sh
+sudo ./$VAGRANT_DATA/scripts/opal/create-opal-projects.sh
+# TODO: script to import dictionary
+# sudo ./$VAGRANT_DATA/scripts/opal/import-testdata-into-projects.sh
 
 # R studio
 #sudo apt-get -y install libapparmor1
@@ -72,6 +78,6 @@ sudo Rscript $VAGRANT_DATA/r/install-opal-r-server.R
 
 # Add databases in Opal at the end of the VM setup so we are sure that Opal is running
 echo "Create Opal databases"
-opal rest -o http://localhost:8080 -u administrator -p $OPAL_PWD -m POST /system/databases --content-type "application/json" < $VAGRANT_DATA/opal/idsdb.json
-opal rest -o http://localhost:8080 -u administrator -p $OPAL_PWD -m POST /system/databases --content-type "application/json" < $VAGRANT_DATA/opal/sqldb.json
-opal rest -o http://localhost:8080 -u administrator -p $OPAL_PWD -m POST /system/databases --content-type "application/json" < $VAGRANT_DATA/opal/mongodb.json
+opal rest -o http://localhost:8080 -u administrator -p $OPAL_PWD -m POST /system/databases --content-type "application/json" < $VAGRANT_DATA/data/opal/idsdb.json
+opal rest -o http://localhost:8080 -u administrator -p $OPAL_PWD -m POST /system/databases --content-type "application/json" < $VAGRANT_DATA/data/opal/sqldb.json
+opal rest -o http://localhost:8080 -u administrator -p $OPAL_PWD -m POST /system/databases --content-type "application/json" < $VAGRANT_DATA/data/opal/mongodb.json
